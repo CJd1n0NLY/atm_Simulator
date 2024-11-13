@@ -2,7 +2,6 @@
 <html>
 <head>
 	<title>Atm Simulator</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 </head>
 <body>
      <form action="login.php" method="post">
