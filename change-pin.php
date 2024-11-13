@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
             $stmt->close();
 
             if (md5($currentPin) != $dbPin) {
-                echo '<script>alert("Incorrect pin code.")</script>';
+                echo '<p>Incorrect pin code.</p>';
             } else {
                     if($newPin == $confirmPin){
                             $hashNewPin = md5($newPin);
@@ -31,14 +31,14 @@ if (isset($_SESSION['user_id'])) {
 
                             if($stmt->execute()){
                                 $_SESSION['pin_code'] = $hashNewPin;
-                                header("Location: menu.php");
-                                $_SESSION['message'] = "Pin code changed successfully!";                            }
+                                echo '<p>Pin code changed successfully!</p>';
+                            }
                             else{
-                                echo '<script>alert("Pin code change failed!")</script>';
+                                echo '<p>Pin code change failed!</p>';
                             }
                         }
                         else{
-                            echo '<script>alert("New pin and Confirm pin is not the same")</script>';
+                            echo '<p>New pin and Confirm pin is not the same</p>';
                         }
             }
             
