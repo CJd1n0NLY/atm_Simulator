@@ -14,9 +14,9 @@ if (isset($_SESSION['user_id'])) {
 
         // check current balance first
         if ($amount <= 0) {
-            echo '<p>Invalid amount.</p>';
+            echo '<script>alert("Invalid amount.")</script>';
         } elseif ($amount > $balance) {
-            echo '<p>Insufficient balance.</p>';
+            echo '<script>alert("Insufficient balance.")</script>';
         } else {
             $stmt = $conn->prepare("SELECT pin_code FROM users WHERE acc_no = ?");
             $stmt->bind_param("s", $accNo);
@@ -26,7 +26,7 @@ if (isset($_SESSION['user_id'])) {
             $stmt->close();
 
             if (md5($pinCode) != $dbPin) {
-                echo '<p>Incorrect Pin Code.</p>';
+                echo '<script>alert("Incorrect pin code.")</script>';
             } else {
                 // check transfer account if it is existing in the database
                 $stmt = $conn->prepare("SELECT acc_no, balance FROM users WHERE acc_no = ?");
@@ -49,10 +49,11 @@ if (isset($_SESSION['user_id'])) {
                     $stmt->bind_param("ds", $updatedBalance, $transferAccNo);
                     $stmt->execute();
                     $stmt->close();
-                    echo '<p>Transfer Successful</p>';
+                    header("Location: menu.php");
+                    $_SESSION['message'] = "Transfer Successful!";
                 } else {
                     $stmt->close();
-                    echo '<p>Transferee account does not exist!</p>';
+                    echo '<script>alert("Transferee account does not exist!")</script>';
                 }
             }
         }
@@ -66,6 +67,7 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATM Simulator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 </head>
 <body>
     <h1>Transfer Money</h1>

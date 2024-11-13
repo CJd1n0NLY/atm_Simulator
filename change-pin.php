@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
             $stmt->close();
 
             if (md5($currentPin) != $dbPin) {
-                echo '<p>Incorrect pin code.</p>';
+                echo '<script>alert("Incorrect pin code.")</script>';
             } else {
                     if($newPin == $confirmPin){
                             $hashNewPin = md5($newPin);
@@ -31,14 +31,14 @@ if (isset($_SESSION['user_id'])) {
 
                             if($stmt->execute()){
                                 $_SESSION['pin_code'] = $hashNewPin;
-                                echo '<p>Pin code changed successfully!</p>';
-                            }
+                                header("Location: menu.php");
+                                $_SESSION['message'] = "Pin code changed successfully!";                            }
                             else{
-                                echo '<p>Pin code change failed!</p>';
+                                echo '<script>alert("Pin code change failed!")</script>';
                             }
                         }
                         else{
-                            echo '<p>New pin and Confirm pin is not the same</p>';
+                            echo '<script>alert("New pin and Confirm pin is not the same")</script>';
                         }
             }
             
@@ -54,6 +54,7 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATM Simulator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 </head>
 <body>
     <h1>Change Pin Code</h1>
