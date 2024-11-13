@@ -20,14 +20,15 @@ if (isset($_SESSION['user_id'])) {
 
             if($stmt->execute()){
                 $_SESSION['balance'] = $withdrawnBalance;
-                echo "<p> Withdrawal Successful! </p>";
+                header("Location: menu.php");
+                $_SESSION['message'] = "Withdrawal Successful!";
             }
             else{
-                echo "<p> Withdrawal Failed! </p>";
+                echo '<script>alert("Withdrawal Failed")</script>';
             }
         }
         else{
-            echo "<p>Invalid amount. Please enter a valid amount.</p>";
+            echo '<script>alert("Invalid amount. Please enter a valid amount.")</script>';
         }
             
     }
