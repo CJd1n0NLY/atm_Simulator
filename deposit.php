@@ -19,11 +19,11 @@ if (isset($_SESSION['user_id'])) {
 
             if($stmt->execute()){
                 $_SESSION['balance'] = $updateBalance;
-                header("Location: menu.php");
-                $_SESSION['message'] = "Amount Deposited Successfully!";
+                echo '<p>Deposit Successful</p>';
             }
             else{
-                echo '<script>alert("Deposit Failed")</script>';            }
+                echo '<p>Deposit Failed</p>';
+            }
          
     }
 } 

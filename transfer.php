@@ -14,9 +14,9 @@ if (isset($_SESSION['user_id'])) {
 
         // check current balance first
         if ($amount <= 0) {
-            echo '<script>alert("Invalid amount.")</script>';
+            echo '<p>Invalid amount.</p>';
         } elseif ($amount > $balance) {
-            echo '<script>alert("Insufficient balance.")</script>';
+            echo '<p>Insufficient balance.</p>';
         } else {
             $stmt = $conn->prepare("SELECT pin_code FROM users WHERE acc_no = ?");
             $stmt->bind_param("s", $accNo);
@@ -26,7 +26,7 @@ if (isset($_SESSION['user_id'])) {
             $stmt->close();
 
             if (md5($pinCode) != $dbPin) {
-                echo '<script>alert("Incorrect pin code.")</script>';
+                echo '<p>Incorrect Pin Code.</p>';
             } else {
                 // check transfer account if it is existing in the database
                 $stmt = $conn->prepare("SELECT acc_no, balance FROM users WHERE acc_no = ?");
@@ -49,11 +49,10 @@ if (isset($_SESSION['user_id'])) {
                     $stmt->bind_param("ds", $updatedBalance, $transferAccNo);
                     $stmt->execute();
                     $stmt->close();
-                    header("Location: menu.php");
-                    $_SESSION['message'] = "Transfer Successful!";
+                    echo '<p>Transfer Successful</p>';
                 } else {
                     $stmt->close();
-                    echo '<script>alert("Transferee account does not exist!")</script>';
+                    echo '<p>Transferee account does not exist!</p>';
                 }
             }
         }
